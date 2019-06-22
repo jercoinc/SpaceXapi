@@ -1,0 +1,149 @@
+#SpaceXData {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#SpaceXData td,
+#SpaceXData th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#SpaceXData tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#SpaceXData tr:hover {
+  background-color: #ddd;
+}
+
+#SpaceXData th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #286090;
+  color: white;
+}
+
+#headText {
+  text-align: center;
+  color: white;
+  background-color: #286090;
+  padding: 1em 2em;
+  border-radius: 25px;
+  margin: 0.5em 0.2em;
+  font-family: "Lobster", cursive;
+}
+
+#headText h1 {
+  font-size: 3em;
+}
+#headText p {
+  font-size: 2em;
+}
+
+.headline {
+  padding-bottom: 1em;
+}
+
+#img-caption {
+  text-align: center;
+  padding: 15px;
+  font-weight: bold;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+  height: auto;
+  margin: auto;
+}
+
+footer {
+  padding-bottom: 10px;
+}
+
+#footer-info {
+  background-color: #286090;
+  color: white;
+  padding-top: 1px;
+  padding-bottom: 10px;
+}
+
+.info-box {
+  display: inline-block;
+  background-color: #e6f5ff;
+  color: black;
+  padding: 3em;
+  text-align: left;
+  max-width: 1000px;
+
+  margin-top: 3em;
+  margin-bottom: 25px;
+}
+.tribute-info li {
+  list-style-type: square;
+  margin-left: 1em;
+  margin-top: 1em;
+}
+#bottom-white-space {
+  background-color: white;
+}
+
+/* Menu Settings*/
+
+header ul {
+  list-style-type: none;
+  margin: 0.2em;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  border-radius: 0.5em;
+}
+
+header li {
+  float: left;
+}
+
+header li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+header li a:hover:not(.active) {
+  background-color: #111;
+}
+
+header .active {
+  background-color: #286090;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+  padding: 1em;
+  /* background-color: #e6f5ff; */
+}
+table th {
+  font-weight: bold;
+}
+table {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.center {
+  margin: auto;
+  width: 80%;
+
+  padding: 10px;
+}
+
+.spaceblue {
+  color: #286090;
+}

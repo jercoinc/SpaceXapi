@@ -1,0 +1,40 @@
+.center {
+  margin: auto;
+  width: 90%;
+
+  padding: 10px;
+}
+
+.spaceblue {
+  color: #286090;
+}
+/* Menu Settings*/
+
+header ul {
+  list-style-type: none;
+  margin: 0.2em;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  border-radius: 0.5em;
+}
+
+header li {
+  float: left;
+}
+
+header li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+header li a:hover:not(.active) {
+  background-color: #111;
+}
+
+header .active {
+  background-color: #286090;
+}
