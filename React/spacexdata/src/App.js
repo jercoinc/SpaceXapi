@@ -1,101 +1,172 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
+import ReactHtmlParser, {
+  processNodes,
+  convertNodeToElement,
+  htmlparser2
+} from "react-html-parser";
 import "./App.css";
-import { AgGridReact } from "ag-grid-react";
-import "ag-grid-community/dist/styles/ag-grid.css";
-import "ag-grid-community/dist/styles/ag-theme-balham.css";
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      columnDefs: [
-        {
-          headerName: "Launch Date",
-          field: "launch_date_utc",
-          sortable: "true",
-          resizable: true
-        },
-        {
-          headerName: "Flight Number",
-          field: "flight_number",
-          sortable: "true",
-          resizable: true,
-          sort: "desc"
-        },
-        {
-          headerName: "Mission Name",
-          field: "mission_name",
-          sortable: "true",
-          resizable: true
-        },
-        {
-          headerName: "Rocket Name",
-          field: "rocket.rocket_name",
-          sortable: "true",
-          resizable: true
-        },
-        {
-          headerName: "Launch Sucessful",
-          field: "launch_success",
-          sortable: "true",
-          resizable: true
-        },
-        {
-          headerName: "Payload Mass Lbs",
-          // Grid does not like getting to the pounds and no easy way
-          // to loop through the json array that I could find in this product
-          // without more time. This workes in html version
-          field: "rocket.second_stage.payloads[0].payload_mass_lbs",
-          sortable: "true",
-          resizable: true,
-          boolean: "true"
-        },
-        {
-          headerName: "Cargo Manifest",
-          field: "rocket.second_stage.payloads[0].cargo_manifest",
-          sortable: "true",
-          resizable: true
-        }
-      ]
-    };
+    this.state = {};
   }
 
-  componentDidMount() {
-    fetch("https://api.spacexdata.com/v3/launches")
-      .then(result => result.json())
-
-      .then(rowData => this.setState({ rowData }));
+  async componentDidMount() {
+    const url = "https://api.spacexdata.com/v3/launches";
+    const response = await fetch(url);
+    let data = await response.json();
+    // Sort before setting to state
+    data.sort((a, b) => b.flight_number - a.flight_number);
+    // Build Rank Array
+    const rankArray = this.getRank(data);
+    // Put SpaceX and Rank data in state.
+    this.setState({ rowData: data, rankData: rankArray });
   }
-
-  parseData(response) {
-    return response.data;
-  }
-
-  onLoad = rowData => {
-    this.setState({
-      rowData: this.parseData(rowData)
-    });
-  };
 
   render() {
+    if (this.state.loading) {
+      return <div>Loading Api Data...</div>;
+    }
+
+    if (!this.state.rowData) {
+      return <div>No data returned from api</div>;
+    }
+
     return (
-      <div style={{ width: "100%", height: "100%" }}>
-        <div
-          className="ag-theme-balham"
-          style={{
-            height: "600px",
-            width: "100%"
-          }}
-        >
-          <AgGridReact
-            columnDefs={this.state.columnDefs}
-            rowData={this.state.rowData}
-          />
-        </div>
+      <div className="App">
+        <table id="SpaceXData">
+          <thead>{this.buildListHeader()}</thead>
+          <tbody>
+            {this.state.rowData.map(flight => (
+              <React.Fragment key={flight.flight_number}>
+                <tr>
+                  <td>{this.formatDateTime(flight.launch_date_utc)}</td>
+                  <td>{flight.flight_number}</td>
+                  <td>{flight.mission_name}</td>
+                  <td>{flight.rocket.rocket_name}</td>
+                  <td>{this.formatLaunchSuccess(flight.launch_success)}</td>
+                  <td>
+                    {this.payloadTotal(flight.rocket.second_stage.payloads)}
+                  </td>
+                  <td>{this.displayRank(flight.flight_number)}</td>
+                  <td>
+                    {this.getManifest(flight.rocket.second_stage.payloads)}
+                  </td>
+                </tr>
+              </React.Fragment>
+            ))}
+          </tbody>
+        </table>
       </div>
     );
   }
+
+  buildListHeader() {
+    // Display Header
+    return (
+      <tr>
+        <th>Launch Date - Time</th>
+        <th>Flight Number</th>
+        <th>Mission Name</th>
+        <th>Rocket Name</th>
+        <th>Launch Status</th>
+        <th>Payload Mass lbs</th>
+        <th>Payload Rank</th>
+        <th>Cargo Manifest</th>
+      </tr>
+    );
+  }
+
+  formatLaunchSuccess = input => {
+    if (input === true) {
+      return "Successful";
+    } else if (input === false) {
+      return "Failure";
+    } else {
+      return "Not Launched";
+    }
+  };
+
+  getManifest = payLoadArray => {
+    let manfestStore = "";
+    for (let i = 0; i < payLoadArray.length; i++) {
+      let tempManifest = payLoadArray[i].cargo_manifest;
+      if (tempManifest === null || tempManifest === undefined) {
+        manfestStore += "M-" + (i + 1) + " Not Available<br />";
+      } else {
+        manfestStore +=
+          "<a href=" +
+          tempManifest +
+          " target='_blank'>View M-" +
+          (i + 1) +
+          "</a><br />";
+      }
+    }
+
+    return <div>{ReactHtmlParser(manfestStore)}</div>;
+  };
+
+  payloadTotal = payLoadArray => {
+    let lbsTotal = 0;
+    for (let i = 0; i < payLoadArray.length; i++) {
+      lbsTotal += payLoadArray[i].payload_mass_lbs;
+    }
+
+    return lbsTotal.toFixed(3);
+  };
+
+  displayRank = data => {
+    const rankList = this.state.rankData;
+    let rankValue = "Not Ranked" + rankList.length;
+
+    for (let i = 0; i < rankList.length; i++) {
+      if (rankList[i].rankId === data) {
+        if (rankList[i].lbs === 0) {
+          rankValue = "Not Ranked";
+        } else {
+          rankValue = i + 1;
+        }
+
+        break;
+      }
+    }
+    return rankValue;
+  };
+
+  getRank = data => {
+    let lbsRankArr = [];
+    for (let counter = 0; counter < data.length; counter++) {
+      let lbsRankItem = { rankId: data[counter].flight_number, lbs: 0 };
+      for (
+        let pCounter = 0;
+        pCounter < data[counter].rocket.second_stage.payloads.length;
+        pCounter++
+      ) {
+        lbsRankItem.lbs += Number(
+          data[counter].rocket.second_stage.payloads[pCounter].payload_mass_lbs
+        );
+      }
+      lbsRankArr.push(lbsRankItem);
+    }
+    lbsRankArr.sort((a, b) => b.lbs - a.lbs); // descending order
+
+    return lbsRankArr;
+  };
+
+  formatDateTime = dateTimeParm => {
+    let dtChange = new Date(dateTimeParm);
+    // getMonth is zero based - This fixes it.
+    let fixedMonth = dtChange.getMonth() + 1;
+    let cMonth = (fixedMonth < 10 ? "0" : "") + fixedMonth;
+    let cDay = (dtChange.getDate() < 10 ? "0" : "") + dtChange.getDate();
+    let cYear = dtChange.getFullYear();
+    let cHour = (dtChange.getHours() < 10 ? "0" : "") + dtChange.getHours();
+    let cMinutes =
+      (dtChange.getMinutes() < 10 ? "0" : "") + dtChange.getMinutes();
+
+    return cMonth + "/" + cDay + "/" + cYear + " - " + cHour + ":" + cMinutes;
+  };
 }
 
 export default App;

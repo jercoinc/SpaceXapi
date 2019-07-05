@@ -58,17 +58,17 @@ function formatData(data) {
     let launchDate = new Date(data[counter].launch_date_utc);
     // Reformat date and time
     let launchDateString =
-      ("0" + (launchDate.getUTCMonth() + 1)).slice(-2) +
+      ("0" + (launchDate.getMonth() + 1)).slice(-2) +
       "/" +
-      ("0" + launchDate.getUTCDate()).slice(-2) +
+      ("0" + launchDate.getDate()).slice(-2) +
       "/" +
-      ("0" + launchDate.getUTCFullYear()).slice(-4) +
+      ("0" + launchDate.getFullYear()).slice(-4) +
       " " +
-      ("0" + launchDate.getUTCHours()).slice(-2) +
+      ("0" + launchDate.getHours()).slice(-2) +
       ":" +
-      ("0" + launchDate.getUTCMinutes()).slice(-2) +
+      ("0" + launchDate.getMinutes()).slice(-2) +
       ":" +
-      ("0" + launchDate.getUTCSeconds()).slice(-2);
+      ("0" + launchDate.getSeconds()).slice(-2);
 
     tempText += launchDateString;
     tempText += "</td>";
