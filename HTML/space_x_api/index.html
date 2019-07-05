@@ -97,29 +97,24 @@
             every step of the way.
           </p>
           <p>
-            I was mostly successful and found the real challenge was dealing
-            with React in the short amount of time I had for the project. I will
-            revisit this project after I have taken React classes and have more
-            experience with JSX.
-          </p>
-          <p>
             I chose AG-Grid as my grid product. The recommended grid product
             only came with a 30 day free trial. Since I wanted this project on
             my website for more 30 days, I went with a product that had a
-            community version.<br />&nbsp
+            community version.
+          </p>
+          <p>
+            The requesting company gave me more time for the project. They
+            wanted me to see if I could replicate my HTML version in React with
+            a table, without AG-Grid.<br />&nbsp
           </p>
           <h3 class="headline">
             My Timeline
           </h3>
           <ul>
             <li>
-              <strong>Friday Afternoon</strong> – I received the challenged and
-              started looking at the date in Json format and working on the
+              <strong>Friday Afternoon</strong> – I received the challenge and
+              started looking at the data in Json format and working on the
               Javascript call to retrieve the data.
-            </li>
-            <li>
-              <strong>Saturday</strong> – No work on project – planned trip with
-              my wife.
             </li>
             <li>
               <strong>Sunday</strong> – I decided to make sure I could complete
@@ -140,7 +135,7 @@
               with the way React handles Json. This is where all the problems
               occurred, probably because I have never worked with React or JSX.
               From what I have seen, React will load the Json and store it in
-              the state. The issue is, the SpaceX data had lots of changes that
+              the State. The issue is, the SpaceX data had lots of changes that
               needed to take place before the grid displayed it. All examples of
               setState were basic and would not come close to what I needed to
               do. Some of the setState examples never worked in my React
@@ -149,28 +144,49 @@
               SpaceX data. It was apparent that this was not the right way to
               go. Time to call it a day and go with the fields I could display
               without issues. I realized this project required much more time
-              and knowledge.
+              and knowledge. I contacted the company for further instruction.
             </li>
             <li>
-              <strong>Thursday</strong> – No work on project – part-time job.
+              <strong>Friday</strong> –The requesting company gave me more time
+              to complete the project without using AG-Grid.
             </li>
             <li>
-              <strong>Friday</strong> – Bring the project to a close. Build the
-              website and finish documentation.<br />&nbsp
+              <strong>Monday</strong> – I reviewed several YouTube React
+              lectures. I removed AG-Grid. I ran into issues with the current
+              code not wanting to load the SpaceX data.
+            </li>
+            <li>
+              <strong>Tuesday</strong> – I fixed the SpaceX data loading issue.
+              Got UTC time, flight number, mission name, rocket name and launch
+              status added to the table.
+            </li>
+            <li>
+              <strong>Wednesday</strong> - Payload mass calculation and cargo
+              manifest added to the table. I had issues with displaying HTML in
+              React. I researched and added NPM package ReactHtmlParser. I had
+              issues with building the rank table and getting function to see
+              the data.
+            </li>
+            <li>
+              <strong>Thursday</strong> – I adjusted date/time to display local
+              time. I finished the rank table by adding it to the State so
+              functions could process it. I wrapped up the website and code.<br />&nbsp
             </li>
           </ul>
           <h3 class="headline">
             Conclusion
           </h3>
           <p>
-            This was a really cool challenge, and I am glad I had the
-            opportunity to take it on. I was very successful in most of the
-            project, including getting React to work, working with AG-grid and
-            NodeJS, and accomplishing instructions using HTML. I had issues
-            filtering data in React. I needed more knowledge in React and JSX. I
-            am looking forward to taking classes to gain this knowledge and
-            making this project a complete success. I face challenges with
-            determination.<br />&nbsp
+            This was a really cool challenge, and I am grateful for the
+            opportunity to take on this project. I was able to complete the
+            project successfully. At first, I was unable to get AG-Grid to do
+            some of the more complex work, but I was completely successful using
+            a HTML table in React. It was very apparent this project would have
+            flowed smoother if I had previous experience in using React. Every
+            step was a challenge, including getting React to work, working with
+            React State and learning to use NodeJS. I am looking forward to
+            taking classes to acquire this knowledge for future projects.
+            <br />&nbsp
           </p>
 
           <h3>Project Links</h3>
@@ -208,10 +224,33 @@
               >
             </li>
             <li>
+              NPM Package -
+              <a
+                href="https://www.npmjs.com/package/react-html-parser"
+                target="_blank"
+                >React HTML Parser</a
+              >
+            </li>
+            <li>
               Source Code -
               <a href="https://github.com/jercoinc/SpaceXapi" target="_blank"
-                >HTML and React source code.</a
+                >HTML and React source code.<br />&nbsp</a
               >
+            </li>
+          </ul>
+
+          <h3 class="headline">
+            Tools
+          </h3>
+          <ul>
+            <li>
+              Editor - Visual Studio Code
+            </li>
+            <li>
+              VS Code Extensions - Babel / Prettier / HTML Boilerplate
+            </li>
+            <li>
+              Command Line - Cmder
             </li>
           </ul>
         </div>
